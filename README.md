@@ -1,4 +1,5 @@
-Zandronum server query library and command-line test program.
+Zandronum server query library and command-line test program
+------------------------------------------------------------
 
 Usage:
 
