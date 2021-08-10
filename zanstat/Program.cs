@@ -99,8 +99,6 @@ namespace Zanstat
                         Console.WriteLine($"  {team}");
                 }
             }
-
-            Console.ReadKey();
         }
     }
 }
