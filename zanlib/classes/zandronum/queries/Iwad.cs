@@ -2,9 +2,12 @@
 
 namespace Zanlib
 {
-    public static class Iwad
+
+    public class Iwad: ZandronumQuery
     {
         private const int SQF_IWAD = 0x00000200;
+
+        public Iwad(NetworkHelper networkHelper) : base(networkHelper) { }
 
         /// <summary>
         /// Returns the iwad used by the server.
@@ -12,11 +15,10 @@ namespace Zanlib
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static string Get(string hostname, int port)
+        public string Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_IWAD, hostname, port);
-            string iwad;
-            MessageHelpers.GetStringFromMessage(result, out iwad);
+            var result = _networkHelper.GetMessageFromServer(SQF_IWAD);
+            MessageHelpers.GetStringFromMessage(result, out string iwad);
             return iwad;
         }
     }

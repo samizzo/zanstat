@@ -1,8 +1,10 @@
 ﻿namespace Zanlib
 {
-    public static class Skill
+    public class Skill: ZandronumQuery
     {
         private const int SQF_GAMESKILL = 0x00001000;
+
+        public Skill(NetworkHelper networkHelper) : base(networkHelper) { }
 
         /// <summary>
         /// Returns the skill level on the server
@@ -10,9 +12,9 @@
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static byte Get(string hostname, int port)
+        public byte Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_GAMESKILL, hostname, port);
+            var result = _networkHelper.GetMessageFromServer(SQF_GAMESKILL);
             byte skill;
             MessageHelpers.GetByteFromMessage(result, out skill);
             return skill;

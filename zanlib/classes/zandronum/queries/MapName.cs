@@ -1,8 +1,10 @@
 ﻿namespace Zanlib
 {
-    public static class MapName
+    public class MapName: ZandronumQuery
     {
         private const int SQF_MAPNAME = 0x00000008;
+
+        public MapName(NetworkHelper networkHelper) : base(networkHelper) { }
 
         /// <summary>
         /// Returns the current map name running on the server.
@@ -10,11 +12,10 @@
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static string Get(string hostname, int port)
+        public string Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_MAPNAME, hostname, port);
-            string mapName;
-            MessageHelpers.GetStringFromMessage(result, out mapName);
+            var result = _networkHelper.GetMessageFromServer(SQF_MAPNAME);
+            MessageHelpers.GetStringFromMessage(result, out string mapName);
             return mapName;
         }
     }

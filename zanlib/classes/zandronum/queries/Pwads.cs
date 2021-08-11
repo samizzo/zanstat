@@ -2,9 +2,11 @@
 
 namespace Zanlib
 {
-    public static class Pwads
+    public class Pwads: ZandronumQuery
     {
         private const int SQF_PWADS = 0x00000040;
+
+        public Pwads(NetworkHelper networkHelper) : base(networkHelper) { }
 
         /// <summary>
         /// Returns the pwads loaded by the server.
@@ -12,9 +14,9 @@ namespace Zanlib
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static string[] Get(string hostname, int port)
+        public string[] Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_PWADS, hostname, port);
+            var result = _networkHelper.GetMessageFromServer(SQF_PWADS);
             byte numPwads;
             result = MessageHelpers.GetByteFromMessage(result, out numPwads);
 

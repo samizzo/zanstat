@@ -1,10 +1,12 @@
 ﻿namespace Zanlib
 {
-    public static class Players
+    public class Players: ZandronumQuery
     {
         private const int SQF_GAMETYPE = 0x00000080;
         private const int SQF_NUMPLAYERS = 0x00080000;
         private const int SQF_PLAYERDATA = 0x00100000;
+
+        public Players(NetworkHelper networkHelper) : base(networkHelper) { }
 
         public class Player
         {
@@ -28,9 +30,9 @@
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static Player[] Get(string hostname, int port)
+        public Player[] Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_GAMETYPE | SQF_NUMPLAYERS | SQF_PLAYERDATA, hostname, port);
+            var result = _networkHelper.GetMessageFromServer(SQF_GAMETYPE | SQF_NUMPLAYERS | SQF_PLAYERDATA);
 
             byte gameModeByte;
             result = MessageHelpers.GetByteFromMessage(result, out gameModeByte);
@@ -40,7 +42,7 @@
             byte numPlayers;
             result = MessageHelpers.GetByteFromMessage(result, out numPlayers);
 
-            GameMode gameMode = (GameMode)gameModeByte;
+            GameModeEnum gameMode = (GameModeEnum)gameModeByte;
             var players = new Player[numPlayers];
             for (var i = 0; i < numPlayers; i++)
             {

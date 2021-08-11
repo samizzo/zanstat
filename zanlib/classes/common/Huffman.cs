@@ -19,11 +19,11 @@ namespace Zanlib
             public int length;
         }
 
-        private static HuffmanNode huffmanTree;
-        private static HuffmanTable[] huffmanLookup;
+        private HuffmanNode huffmanTree;
+        private HuffmanTable[] huffmanLookup;
 
-        private static byte[] masks = new byte[] { 0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80 };
-        private static double[] frequencies = new double[]
+        private byte[] masks = new byte[] { 0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80 };
+        private double[] frequencies = new double[]
         {
             0.14473691, 0.01147017, 0.00167522, 0.03831121, 0.00356579,
             0.03811315, 0.00178254, 0.00199644, 0.00183511, 0.00225716,
@@ -79,7 +79,7 @@ namespace Zanlib
             0.00160896
         };
 
-        public static void Init()
+        public Huffman()
 	    {
             huffmanLookup = new HuffmanTable[256];
 		    for(int i = 0;i< 256;i++)
@@ -90,7 +90,7 @@ namespace Zanlib
             BuildTree();
         }
 
-        public static byte[] Decode(byte[] input)
+        public byte[] Decode(byte[] input)
         {
             int bit, bitCount;
             HuffmanNode tmp;
@@ -125,7 +125,7 @@ namespace Zanlib
             return output.ToArray();
         }
 
-        public static byte[] Encode(byte[] input)
+        public byte[] Encode(byte[] input)
         {
             byte[] output = new byte[20000];
             int i, j, bitat, outlen;
@@ -167,7 +167,7 @@ namespace Zanlib
             return result;
         }
 
-        private static bool MakeTable(HuffmanNode node, int length, long bits)
+        private bool MakeTable(HuffmanNode node, int length, long bits)
         {
             if (node == null)
                 throw new ArgumentNullException("node");
@@ -195,7 +195,7 @@ namespace Zanlib
             return true;
         }
 
-        private static void PutBit(byte[] buf, int pos, long bit)
+        private void PutBit(byte[] buf, int pos, long bit)
         {
             if (bit != 0)
             {
@@ -207,12 +207,12 @@ namespace Zanlib
             }
         }
 
-        private static bool GetBit(byte[] buf, int pos)
+        private bool GetBit(byte[] buf, int pos)
         {
             return (buf[pos / 8] & masks[pos % 8]) != 0;
         }
 
-        private static void BuildTree()
+        private void BuildTree()
         {
             double min1, min2;
             int i, j, minat1, minat2;

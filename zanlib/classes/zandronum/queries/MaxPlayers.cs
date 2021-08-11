@@ -1,8 +1,10 @@
 ﻿namespace Zanlib
 {
-    public static class MaxPlayers
+    public class MaxPlayers: ZandronumQuery
     {
         private const int SQF_MAXPLAYERS = 0x00000020;
+
+        public MaxPlayers(NetworkHelper networkHelper) : base(networkHelper) { }
 
         /// <summary>
         /// Returns the maximum number of players for the server.
@@ -10,9 +12,9 @@
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static byte Get(string hostname, int port)
+        public byte Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_MAXPLAYERS, hostname, port);
+            var result = _networkHelper.GetMessageFromServer(SQF_MAXPLAYERS);
             byte maxPlayers;
             MessageHelpers.GetByteFromMessage(result, out maxPlayers);
             return maxPlayers;

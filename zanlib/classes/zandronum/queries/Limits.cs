@@ -1,8 +1,10 @@
 ﻿namespace Zanlib
 {
-    public static class Limits
+    public class Limits: ZandronumQuery
     {
         private const int SQF_LIMITS = 0x00010000;
+
+        public Limits(NetworkHelper networkHelper) : base(networkHelper) { }
 
         public struct Limit
         {
@@ -25,9 +27,9 @@
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static Limit Get(string hostname, int port)
+        public Limit Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_LIMITS, hostname, port);
+            var result = _networkHelper.GetMessageFromServer(SQF_LIMITS);
             var data = new Limit();
             result = MessageHelpers.GetShortFromMessage(result, out data.FragLimit);
             result = MessageHelpers.GetShortFromMessage(result, out data.TimeLimit);

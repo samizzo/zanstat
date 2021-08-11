@@ -61,12 +61,14 @@ namespace Zanstat
         {
             var bytes = Encoding.ASCII.GetBytes(message);
 
-            var compressed = Zanlib.Huffman.Encode(bytes);
+            Zanlib.Huffman huffman = new Zanlib.Huffman();
+
+            var compressed = huffman.Encode(bytes);
             Console.WriteLine($"Compressed data (length is {compressed.Length}):");
             PrintArray(compressed);
             Console.WriteLine();
 
-            var uncompressed = Zanlib.Huffman.Decode(compressed);
+            var uncompressed = huffman.Decode(compressed);
             Console.WriteLine($"Uncompressed data (length is {uncompressed.Length}):");
             PrintMessage(uncompressed);
             Console.WriteLine("\n\n");

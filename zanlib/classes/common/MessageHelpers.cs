@@ -71,11 +71,11 @@ namespace Zanlib
         }
 
         /// <summary>
-        /// Returns a compressed message of type `messageType` for sending to the server.
+        /// Returns a message of type `messageType` for sending to the server.
         /// </summary>
         /// <param name="messageType"></param>
         /// <returns></returns>
-        public static byte[] GetCompressedMessage(int messageType)
+        public static byte[] GetMessage(int messageType)
         {
             var message = new int[3];
             message[0] = LAUNCHER_CHALLENGE;
@@ -84,8 +84,7 @@ namespace Zanlib
 
             var byteMessage = new byte[message.Length * sizeof(int)];
             Buffer.BlockCopy(message, 0, byteMessage, 0, byteMessage.Length);
-            var compressedMessage = Huffman.Encode(byteMessage);
-            return compressedMessage;
+            return byteMessage;
         }
     }
 }

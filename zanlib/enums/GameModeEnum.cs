@@ -1,6 +1,6 @@
 ﻿namespace Zanlib
 {
-    public enum GameMode
+    public enum GameModeEnum
     {
         Cooperative = 0,
         Survival,
@@ -18,13 +18,5 @@
         OneFlagCTF,
         Skulltag,
         Domination
-    }
-
-    public static class GameModeExtension
-    {
-        public static bool IsTeamGame(this GameMode gameMode)
-        {
-            return gameMode == GameMode.TeamGame || gameMode == GameMode.TeamLastManStanding || gameMode == GameMode.Teamplay || gameMode == GameMode.TeamPossession;
-        }
     }
 }

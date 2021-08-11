@@ -1,11 +1,13 @@
 ﻿namespace Zanlib
 {
-    public static class Teams
+    public class Teams: ZandronumQuery
     {
         private const int SQF_TEAMINFO_NUMBER = 0x00200000;
         private const int SQF_TEAMINFO_NAME = 0x00400000;
         private const int SQF_TEAMINFO_COLOR = 0x00800000;
         private const int SQF_TEAMINFO_SCORE = 0x01000000;
+
+        public Teams(NetworkHelper networkHelper) : base(networkHelper) { }
 
         public class Team
         {
@@ -25,9 +27,9 @@
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static Team[] Get(string hostname, int port)
+        public Team[] Get()
         {
-            var result = NetworkHelpers.GetMessageFromServer(SQF_TEAMINFO_NUMBER | SQF_TEAMINFO_NAME | SQF_TEAMINFO_COLOR | SQF_TEAMINFO_SCORE, hostname, port);
+            var result = _networkHelper.GetMessageFromServer(SQF_TEAMINFO_NUMBER | SQF_TEAMINFO_NAME | SQF_TEAMINFO_COLOR | SQF_TEAMINFO_SCORE);
 
             byte numTeams;
             result = MessageHelpers.GetByteFromMessage(result, out numTeams);
